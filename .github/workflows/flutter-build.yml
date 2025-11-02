@@ -19,16 +19,15 @@ jobs:
           flutter-version: '3.19.0'
 
       - name: Get dependencies
-        working-directory: apk/faceid_app
+        working-directory: faceid_app
         run: flutter pub get
 
       - name: Build release APK
-        working-directory: apk/faceid_app
+        working-directory: faceid_app
         run: flutter build apk --release
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: apk/faceid_app/build/app/outputs/flutter-apk/app-release.apk
-
+          path: faceid_app/build/app/outputs/flutter-apk/app-release.apk
