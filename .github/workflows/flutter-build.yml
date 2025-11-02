@@ -3,30 +3,32 @@ name: Build Flutter APK
 on:
   push:
     branches:
-      - main  # se ejecutará cuando subas algo al main
-  workflow_dispatch: # permite ejecutarlo manualmente
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar repositorio
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Instalar Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'  # o la versión que uses
+          flutter-version: '3.19.0'
 
-      - name: Obtener dependencias
+      - name: Get dependencies
+        working-directory: faceid_app/faceid_app
         run: flutter pub get
 
-      - name: Construir APK release
+      - name: Build release APK
+        working-directory: faceid_app/faceid_app
         run: flutter build apk --release
 
-      - name: Subir APK como artefacto
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: faceid_app/faceid_app/build/app/outputs/flutter-apk/app-release.apk
+
